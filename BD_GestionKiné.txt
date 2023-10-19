@@ -1,0 +1,117 @@
+CREATE TABLE admin (
+    idAdmin INT NOT NULL PRIMARY KEY AUTO_INCREMENT ,
+    Nom VARCHAR(25),
+    Prenom VARCHAR(25),
+    Email VARCHAR(50),
+    Password VARCHAR(20),
+    Tel VARCHAR(20)  
+);
+
+CREATE TABLE medecin (
+    idMed INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Nom VARCHAR(25),
+    Prenom VARCHAR(25),
+    Email VARCHAR(50),
+    Adresse VARCHAR(50),
+    Tel VARCHAR(20),
+    Specialite VARCHAR(20),
+    Tarif INT
+);
+
+CREATE TABLE kinesitherapeute (
+    idKin INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    idMed INT,
+    Nom VARCHAR(25),
+    Prenom VARCHAR(25),
+    Email VARCHAR(50),
+    Adress VARCHAR(50),
+    Tel VARCHAR(20),
+    FOREIGN KEY(idMed) REFERENCES medecin(idMed)
+);
+
+
+CREATE TABLE progres (
+    idPr INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Info VARCHAR(500),
+    Amélioration VARCHAR(20)
+);
+
+
+CREATE TABLE patient (
+    idPat INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    idPr INT,
+    idMed INT,
+    Nom VARCHAR(25),
+    Prenom VARCHAR(25),
+    Age INT,
+    Tel VARCHAR(20),
+    Adresse VARCHAR(50),
+    Maladie VARCHAR(20),
+    Email VARCHAR(50),
+    FOREIGN KEY(idMed) REFERENCES medecin(idMed),
+    FOREIGN KEY(idPr) REFERENCES progres(idPr)
+);
+
+CREATE TABLE seance (
+    idSea INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    idMed INT,
+    Salle VARCHAR(10),
+    Materiel VARCHAR(100),
+    Description VARCHAR(500),
+    FOREIGN KEY(idMed) REFERENCES medecin(idMed)    
+);
+
+
+
+CREATE TABLE rdv(
+    idRdv INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    idPat INT,
+    idSea INT,
+    Date date,
+    Time VARCHAR(20),
+    FOREIGN KEY(idPat) REFERENCES patient(idPat),
+    FOREIGN KEY(idSea) REFERENCES seance(idSea)    
+);
+
+CREATE TABLE facture (
+    idFac INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    idSea INT,
+    Suivi BOOLEAN,
+    FOREIGN KEY(idSea) REFERENCES seance(idSea)
+);
+
+*****************************Admin**************************************
+INSERT INTO `admin` (`idAdmin`, `Nom`, `Prenom`, `Email`, `Password`, `Tel`) VALUES ('1', 'DIDANE-EL IDRISSI', 'Manal', 'manal@didane.ma', '12345', '0700353116');
+INSERT INTO `admin` (`idAdmin`, `Nom`, `Prenom`, `Email`, `Password`, `Tel`) VALUES ('2', 'SAIFI', 'Wafaa', 'wafaa@saifi.ma', '12345', '0701210829');
+INSERT INTO `admin` (`idAdmin`, `Nom`, `Prenom`, `Email`, `Password`, `Tel`) VALUES ('3', 'LAHJILI', 'Ibtissam', 'ibtissam@lahjili.ma', '12345', '0684554760');
+
+*****************************Medecin*****************************************
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('1', 'CHAOUKI', 'Haitam ', 'hc@hc.ma', 'Sidi Othmane, Casablanca', '0679813547', 'Kinésithérapie respiratoire', 200);
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('2', 'EL ABDOUNI', 'Abderrazzaq', 'ab@ab.ma', 'Sidi Othmane, Casablanca', '0734198246', 'Kinésithérapie respiratoire' , 250);
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('3', 'EL GHAZALI', 'Wafae ', 'wgh@wgh.ma', 'Belvédère, Casablanca', '0682463749', 'Neurologie ', '200');
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('4', 'ELOUADDANY', 'Abdelkarim', 'abou@abou.ma', 'Mohammédia, Maroc', '0793145682', 'Pédiatrie', '180');
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('5', 'ESSITER', 'Mouad ', 'me@me', 'Agdal, Rabat', '0634194268', 'Post-chirurgie', '200');
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('6', 'HALLA', 'Salma ', 'sh@sh.ma', 'Hay Mohammadi, Casablanca', '0645892173', 'Accompagnement post-cancer', '200');
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('7', 'HAZMIRI', 'Younes ', 'yh@hy.ma', 'Ain Sebaa, Casablanca', '0623457819', 'Neurologie ', '200');
+INSERT INTO `medecin` (`idMed`, `Nom`, `Prenom`, `Email`, `Adresse`, `Tel`, `Specialite`, `Tarif`) VALUES ('8', 'ID EL MOURID', 'Asmaa ', 'aim@aim.ma', 'Agdal, Rabat', '0785246913', 'kiné cardiovasculaire ', '200');
+
+****************************Kinesitherapeute***************************************
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('1', '3', 'AANIBRA', 'Kawtar ', 'ka@ka.ma', 'SidiMoumen, Casablanca', '0674139582');
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('2', '1', 'AHRAR', 'Yassir ', 'ya@ya.ma', 'SidiMaarouf, Casablanca', '0612545194');
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('3', '8', 'AMARIR', 'Naima ', 'na@na.ma', 'Media, Maroc', '072233558811');
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('4', '6', 'BAHRAOUI', 'Chaimaa ', 'cb@cb.ma', 'Barnoussi, Casablanca', '064554133182');
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('5', '2', 'BARHRHOUJ', 'Hamza ', 'hb@hb.ma', 'Hay Hassani, Casablanca', '0698897557');
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('6', '5', 'BEN-CHAREF', 'Kaoutar ', 'kbc@kbc.ma', 'Media, Maroc', '0749928553');
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('7', '7', 'BENEZZINE', 'Issam ', 'ib@ib.ma', 'Agdal, Rabat', '0725349618');
+INSERT INTO `kinesitherapeute` (`idKin`, `idMed`, `Nom`, `Prenom`, `Email`, `Adress`, `Tel`) VALUES ('8', '4', 'BOUZID', 'Abderrahim ', 'abz@abz.ma', 'Maarif, Caablanca', '0612348424');
+
+****************************Patient***************************************
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('1', '1', '5', 'LAHRACHE', 'Abdelghafour ', '23', '0615489412', 'Mohammédia, Maroc', NULL, 'ablh@ablh.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('2', '2', '6', 'MEKKAOUI', 'Zakaria ', '30', '0648841520', 'Sidi Othmane, Casablanca', NULL, 'zm@zm.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('3', '3', '8', 'MSALHA', 'Salma ', '25', '0798846524', 'Anassi, casablanca', NULL, 'sm@sm.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('4', '4', '3', 'OURABAH', 'Fatima Zahra', '50', '069841463', 'Ain Sebaa, Casablanca', NULL, 'fzo@fzo.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('5', '5', '4', 'SAIDINE', 'Meryem ', '63', '0548187923', 'Mohammédia, Maroc', NULL, 'ms@ms.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('6', '6', '2', 'TABIA', 'Nouhaila ', '35', '0699841023', 'Hay Molay Rachid, Casablanca', NULL, 'nt@nt.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('7', '7', '2', 'TIRHLAM', 'Asmae ', '35', '0745631935', 'Hay Mohammadi, Casablanca', NULL, 'at@at.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('8', '8', '1', ' TSOULI FAROUKH', 'El Mehdi', '26', '0652481232', 'Sidi Othmane, Casablanca', NULL, 'mtf@mtf.ma');
+INSERT INTO `patient` (`idPat`, `idPr`, `idMed`, `Nom`, `Prenom`, `Age`, `Tel`, `Adresse`, `Maladie`, `Email`) VALUES ('9', '9', '7', 'ZAINOUN', 'Ayman ', '40', '07556295231', 'Agdal, Rabat', NULL, 'az@az.ma');
